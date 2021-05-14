@@ -1,0 +1,56 @@
+<div>
+  <div class="search-hero">
+    <form class="form-inline md-form mr-auto mb-4">
+      <input placeholder="Search Course...." class="form-control mr-sm-2" matInput type="text" name="courseSearch" id="courseSearch" [(ngModel)]="searchText">
+      <button mdbBtn size="sm" color="elegant" rounded="true" class="my-0 my_se " mdbWavesEffect type="submit">Search</button>
+    </form>
+  </div>
+  <table class="table container my__Container">
+    
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Description</th>
+        <th scope="col">Operations</th>
+      </tr>
+    
+    
+      <tr *ngFor="let course of testing | filterPipe:searchText">
+        <td>{{ course.name }}</td>
+        <td>{{ course.description }}</td>
+        <td>
+        <button (click)="showUpdateForm(course)" class="btn btn-primary" onclick="if (!confirm('Are you Update?')) { return false, window.location.reload() } " style="margin: 5px">Update</button>
+        <button (click)="deleteCourse(course._id)" class="btn btn-danger btn " onclick="if (!confirm('Are you sure?')) { return false }" style="margin: 5px"> Delete</button>
+        </td>
+      </tr>
+    
+  </table>
+
+  <div *ngIf="isUpdateActivated" style="margin-top: 50px; margin-left: 50px;">
+    <h4>Update Course</h4>
+    <form (ngSubmit)="updateCourse(updateForm)" #updateForm="ngForm">
+      <div class="form-group">
+        <label for="name">Course Name</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          class="form-control"
+          required
+          [(ngModel)]="courseToBeUpdated.name"
+          style="width: 400px"/>
+      </div>
+      <div class="form-group">
+        <label for="side">Description</label>
+        <input
+          type="text"
+          id="description"
+          name="description"
+          class="form-control"
+          required
+          [(ngModel)]="courseToBeUpdated.description"
+          style="width: 400px"/>
+      </div>
+      <button [disabled]="updateForm.invalid" class="btn btn-primary" type="submit">Update</button>
+    </form>
+  </div>
+</div>
